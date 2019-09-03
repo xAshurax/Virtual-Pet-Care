@@ -13,14 +13,14 @@ public class Pet : MonoBehaviour
     void Start()
     {
         //Time test
-       // PlayerPrefs.SetString("then", "05/06/2019 11:20:11");
+       // PlayerPrefs.SetString("then", "08/02/2019 11:20:11");
         
         //Getting the bars by name 
         health = GameObject.Find("HealthBar").GetComponent<Stat>();  
         thirst = GameObject.Find("ThirstBar").GetComponent<Stat>();
         happiness = GameObject.Find("HappinessBar").GetComponent<Stat>();
       
-        //Initializing Bars
+        
         Initialize();
     }
 
@@ -98,9 +98,9 @@ public class Pet : MonoBehaviour
         System.TimeSpan ts = GetTimeSpan(); 
 
         //Update thirst
-        //thirst.CurrenValue -= (int)(ts.TotalHours * 2);
+        thirst.CurrenValue -= (int)(ts.TotalHours * 2);
         //Update happiness
-       // happiness.CurrenValue -= (int)((100 - thirst.CurrenValue) * (ts.TotalHours / 5));
+        happiness.CurrenValue -= (int)((100 - thirst.CurrenValue) * (ts.TotalHours / 5));
 
         Debug.Log(PlayerPrefs.GetFloat("happiness"));
         Debug.Log(PlayerPrefs.GetFloat("health"));
