@@ -120,6 +120,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &83464988
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 83464989}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &83464989
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 83464988}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 100.22625, y: 282.013, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 724402406}
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &340066466
 GameObject:
   m_ObjectHideFlags: 0
@@ -565,6 +596,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719791561}
   m_CullTransparentMesh: 0
+--- !u!1 &724402405
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 724402406}
+  - component: {fileID: 724402407}
+  m_Layer: 0
+  m_Name: TimeManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &724402406
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724402405}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 83464989}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &724402407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 724402405}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e0d254835d6b1840b449f9e2995dd16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &831115373
 GameObject:
   m_ObjectHideFlags: 0
@@ -794,6 +868,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2798a92b9293fcf46ae5bd801cd13c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myName: happiness
 --- !u!114 &961523874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -921,7 +996,7 @@ GameObject:
   - component: {fileID: 1263363089}
   m_Layer: 0
   m_Name: Robot
-  m_TagString: Untagged
+  m_TagString: Pet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1195,6 +1270,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2798a92b9293fcf46ae5bd801cd13c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myName: thirst
 --- !u!114 &1512577577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1357,6 +1433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2798a92b9293fcf46ae5bd801cd13c69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myName: health
 --- !u!114 &1588749152
 MonoBehaviour:
   m_ObjectHideFlags: 0

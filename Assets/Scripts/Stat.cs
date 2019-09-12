@@ -6,9 +6,10 @@ using System;
 
 public class Stat : MonoBehaviour
 {
+    [SerializeField] private string myName;
     private Image content; 
     private float currentFill; //different from value since it works from 0 to 1
-    private float currenValue; //How much numerical points I have right now
+    private float currenValue; 
     private float MaxValue = 100; 
     public float CurrenValue 
     {
@@ -37,7 +38,11 @@ public class Stat : MonoBehaviour
         }
     }
 
-    // Start is called before the first frame update
+    public string MyName { get => myName; private set => myName = value; }
+
+
+
+    
     void Start()
     {
         content = GetComponent<Image>(); 
@@ -46,7 +51,7 @@ public class Stat : MonoBehaviour
         
     }
 
-    // Update is called once per frame
+    
     void Update()
     {
         content.fillAmount = currentFill; 

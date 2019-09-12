@@ -4,132 +4,107 @@ using UnityEngine;
 
 public class Pet : MonoBehaviour
 {
-    
-    private Stat health; 
-    private Stat thirst; 
-    private Stat happiness; 
-    private bool serverTime; //
+
+    private Stat health;
+    private Stat thirst;
+    private Stat happiness;
+    private static Pet instance;
+    private int clickCount;
+    private Animator anim;
+
+    public static Pet Instance { get => instance; set => instance = value; }
+    public Stat Health { get => health; set => health = value; }
+    public Stat Thirst { get => thirst; set => thirst = value; }
+    public Stat Happiness { get => happiness; set => happiness = value; }
+
     // Start is called before the first frame update
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        } else
+        {
+            Destroy(this);
+        }
+    }
+
     void Start()
     {
         //Time test
-       // PlayerPrefs.SetString("then", "08/02/2019 11:20:11");
+        // PlayerPrefs.SetString("then", "08/02/2019 11:20:11");
+
         
-        //Getting the bars by name 
-        health = GameObject.Find("HealthBar").GetComponent<Stat>();  
+        health = GameObject.Find("HealthBar").GetComponent<Stat>();
         thirst = GameObject.Find("ThirstBar").GetComponent<Stat>();
         happiness = GameObject.Find("HappinessBar").GetComponent<Stat>();
-      
-        
-        Initialize();
+        anim = GetComponent<Animator>();
+        TimeManager.Instance.Initialize();
+
+
+
     }
 
-    // Update is called once per frame
+   
     void Update()
     {
+        anim.SetBool("Jump", gameObject.transform.position.y > -2.7f);
+        //PC Testing
+        if(Input.GetMouseButtonUp(0))
+        {
+            Touch();
+        }
         //For Debugging only
-        if(Input.GetKeyDown(KeyCode.I))
+        if (Input.GetKeyDown(KeyCode.I))
         {
             health.CurrenValue += 5;
             thirst.CurrenValue += 5;
             happiness.CurrenValue += 10;
-          
+
             PlayerPrefs.SetFloat("health", health.CurrenValue);
             PlayerPrefs.SetFloat("thirst", thirst.CurrenValue);
             PlayerPrefs.SetFloat("happiness", happiness.CurrenValue);
-          
+
         }
         if (Input.GetKeyDown(KeyCode.L))
         {
             health.CurrenValue -= 5;
             thirst.CurrenValue -= 5;
             happiness.CurrenValue -= 10;
-         
+
             PlayerPrefs.SetFloat("health", health.CurrenValue);
             PlayerPrefs.SetFloat("thirst", thirst.CurrenValue);
             PlayerPrefs.SetFloat("happiness", happiness.CurrenValue);
-           
-        }
+
+        } //Debugging end
     }
 
-    private void Initialize()
+    //Increase happiness and make it jump
+    private void Touch()
     {
-        //Check if the pet has some values saved
-
-        //Health
-        if (!PlayerPrefs.HasKey("health")) 
+        Vector2 v = new Vector2(Input.mousePosition.x, Input.mousePosition.y);
+        RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(v), Vector2.zero);
+        if (hit)
         {
-            health.Initialize(100);
-            PlayerPrefs.SetFloat("health", health.CurrenValue);
-        } else
-        {
-            health.Initialize(PlayerPrefs.GetFloat("health"));
+            Debug.Log(hit.transform.gameObject.name);
+            if(hit.transform.gameObject.tag == "Pet")
+            {
+                clickCount++;
+                if(clickCount>=3)
+                {
+                    clickCount = 0;
+                    UpdateStat(happiness, 5);
+                    GetComponent<Rigidbody2D>().AddForce(new Vector2(0, 100000));
+                }
+            }
         }
-        //Thirst
-        if (!PlayerPrefs.HasKey("thirst"))
-        {
-            thirst.Initialize(100);
-            PlayerPrefs.SetFloat("thirst", thirst.CurrenValue);
-        }
-        else
-        {
-            thirst.Initialize(PlayerPrefs.GetFloat("thirst"));
-        }
-        //Happiness
-        if(!PlayerPrefs.HasKey("happiness"))
-        {
-            happiness.Initialize(100);
-            PlayerPrefs.SetFloat("happiness", happiness.CurrenValue);
-        } else
-        {
-            happiness.Initialize(PlayerPrefs.GetFloat("happiness"));
-        }
-        
-        //Time then
-        if (!PlayerPrefs.HasKey("then"))
-        {
-            PlayerPrefs.SetString("then", GetStringTime());
-            Debug.Log(GetTimeSpan().ToString()); // debug
-        } else
-        {
-            Debug.Log(GetTimeSpan().ToString()); // debug
-        }
-        //Get how much time has passed
-        System.TimeSpan ts = GetTimeSpan(); 
-
-        //Update thirst
-        thirst.CurrenValue -= (int)(ts.TotalHours * 2);
-        //Update happiness
-        happiness.CurrenValue -= (int)((100 - thirst.CurrenValue) * (ts.TotalHours / 5));
-
-        Debug.Log(PlayerPrefs.GetFloat("happiness"));
-        Debug.Log(PlayerPrefs.GetFloat("health"));
-        //Check for the last time played
-        if(serverTime)
-        {
-            UpdateServer();
-        } else
-        {
-            InvokeRepeating("UpdateDevice", 0f, 30f); //Save time every 30 secs
-        }
-
     }
 
-    private void UpdateServer() { }
-    private void UpdateDevice() { PlayerPrefs.SetString("then", GetStringTime());  } //Save the time
-    private string GetStringTime()
+    public void UpdateStat(Stat _stat,int _amount)
     {
-        System.DateTime now = System.DateTime.Now;
-        return now.Month + "/" + now.Day + "/" + now.Year + " " + now.Hour + ":" + now.Minute + ":" + now.Second;
+        _stat.CurrenValue += _amount;
+        PlayerPrefs.SetFloat(_stat.MyName, _stat.CurrenValue);
     }
-  private  System.TimeSpan GetTimeSpan()
-    {
-        if (serverTime)
-        {
-            return new System.TimeSpan();
-        } else
-        {
-            return System.DateTime.Now - System.Convert.ToDateTime(PlayerPrefs.GetString("then"));
-        }
-    }
+    
+
 }
